@@ -12,16 +12,20 @@
 <div id="test"></div>
 <script type="text/javascript">
             function listener(event){
-                console.log('Iframe получил: ', event.data);
+                console.log('Iframe получил: ');
+                console.log(event.data);
 
                 document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
+                console.log('Отправляем ответ из Iframe!');
                 parent.postMessage(event.data, '*');
 
                 if (window.removeEventListener) {
+                    console.log('Удаляем listener в iframe');
                     window.removeEventListener("message", listener, false);
                 }
             }
 
+            console.log('Добавляем listener в iframe');
             if (window.addEventListener) {
                 window.addEventListener("message", listener, false);
             } else { // ie 8
