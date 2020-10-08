@@ -25,9 +25,7 @@
             }
 
             document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
-            console.log('Отправляем ответ из Iframe!');
             console.log(parent);
-            parent.postMessage(event.data, '*');
         }
 
         console.log('Iframe начал слушать!');
