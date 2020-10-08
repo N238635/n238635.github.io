@@ -13,10 +13,15 @@
 <script type="text/javascript">
             function listener(event){
                 document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
-                parent.postMessage('Вернули обратно произвольный текст Lorem ipsum dolor.', '*')
+                parent.postMessage(event.data, '*');
+
+                if (window.removeEventListener) {
+                    window.removeEventListener("message", listener, false);
+                }
             }
+
             if (window.addEventListener) {
-                window.addEventListener("message", listener,false);
+                window.addEventListener("message", listener, false);
             } else { // ie 8
                 window.attachEvent("onmessage", listener);
             }
