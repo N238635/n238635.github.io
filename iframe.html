@@ -12,22 +12,21 @@
 <div id="test"></div>
 <script type="text/javascript">
             function listener(event){
-                console.log('Iframe получил: ');
-                console.log(event.data);
+                console.log('Iframe получил: ', event.data);
 
                 document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
                 console.log('Отправляем ответ из Iframe!');
-                parent.postMessage(event.data, '*');
+                parent.postMessage("USER", '*');
 
                 if (window.removeEventListener) {
-                    console.log('Удаляем listener в iframe');
-                    window.removeEventListener("message", listener, false);
+                    console.log('Iframe перестает слушать!');
+                    window.removeEventListener("yandex-login", listener, false);
                 }
             }
 
-            console.log('Добавляем listener в iframe');
+            console.log('Iframe начал слушать!');
             if (window.addEventListener) {
-                window.addEventListener("message", listener, false);
+                window.addEventListener("yandex-login", listener, false);
             } else { // ie 8
                 window.attachEvent("onmessage", listener);
             }
