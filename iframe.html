@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
 </head>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+
 <body>
-<div id="test"></div>
-<script type="text/javascript">
-            function listener(event){
-                console.log('Iframe получил: ', event.data);
+    <div id="test"></div>
+    <script type="text/javascript">
+        function listener(event) {
+            console.log('Iframe получил: ', event.data);
 
-                if (window.removeEventListener) {
-                    console.log('Iframe перестает слушать!');
-                    window.removeEventListener("yandex-login", listener, false);
-                }
-
-                document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
-                console.log('Отправляем ответ из Iframe!');
-                console.log(parent);
-                parent.postMessage("USER", '*');
+            if (!event.data.user) {
+                console.log('Неверное сообщение!');
+                return;
             }
 
-            console.log('Iframe начал слушать!');
-            if (window.addEventListener) {
-                window.addEventListener("yandex-login", listener, false);
-            } else { // ie 8
-                window.attachEvent("onmessage", listener);
+            if (window.removeEventListener) {
+                console.log('Iframe перестал слушать!');
+                window.removeEventListener("message", listener, false);
             }
-        </script>
+
+            document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
+            console.log('Отправляем ответ из Iframe!');
+            console.log(parent);
+            parent.postMessage(event.data, '*');
+        }
+
+        console.log('Iframe начал слушать!');
+        if (window.addEventListener) {
+            window.addEventListener("message", listener, false);
+        } else { // ie 8
+            window.attachEvent("onmessage", listener);
+        }
+    </script>
 </body>
+
 </html>
