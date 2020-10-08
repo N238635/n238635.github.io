@@ -14,14 +14,14 @@
             function listener(event){
                 console.log('Iframe получил: ', event.data);
 
-                document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
-                console.log('Отправляем ответ из Iframe!');
-                parent.postMessage("USER", '*');
-
                 if (window.removeEventListener) {
                     console.log('Iframe перестает слушать!');
                     window.removeEventListener("yandex-login", listener, false);
                 }
+
+                document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
+                console.log('Отправляем ответ из Iframe!');
+                parent.postMessage("USER", '*');
             }
 
             console.log('Iframe начал слушать!');
