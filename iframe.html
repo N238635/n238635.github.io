@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<body>
+<div id="test"></div>
+<script type="text/javascript">
+            function listener(event){
+                document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
+                parent.postMessage('Вернули обратно произвольный текст Lorem ipsum dolor.', '*')
+            }
+            if (window.addEventListener) {
+                window.addEventListener("message", listener,false);
+            } else { // ie 8
+                window.attachEvent("onmessage", listener);
+            }
+        </script>
+</body>
+</html>
