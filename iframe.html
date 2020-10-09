@@ -10,7 +10,7 @@
 
 <body>
     <div>IFRAME:</div>
-    <div id="test"></div>
+    <div style="white-space: pre-line" id="test"></div>
     <script type="text/javascript">
         function listener(event) {
             if (!event.data.id) {
@@ -25,7 +25,7 @@
                 window.removeEventListener("message", listener, false);
             }
 
-            document.getElementById("test").innerHTML = `Получил пользователя от ${event.origin} \tИмя: ${event.data.name} \tID: ${event.data.id}`;
+            document.getElementById("test").innerHTML = `Получил пользователя от ${event.origin} \nИмя: ${event.data.name} \nID: ${event.data.id}`;
         }
 
         console.log('Iframe начал слушать!');
