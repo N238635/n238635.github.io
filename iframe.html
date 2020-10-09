@@ -9,24 +9,23 @@
     crossorigin="anonymous"></script>
 
 <body>
+    <div>IFRAME:</div>
     <div id="test"></div>
     <script type="text/javascript">
         function listener(event) {
-            console.log('Iframe получил: ', event);
-
-            if (!event.data.user) {
+            if (!event.data.id) {
                 console.log('Неверное сообщение!');
                 return;
             }
+
+            console.log('Iframe получил: ', event.data);
 
             if (window.removeEventListener) {
                 console.log('Iframe перестал слушать!');
                 window.removeEventListener("message", listener, false);
             }
 
-            document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
-            console.log('Отправляем ответ из Iframe!');
-            // parent.postMessage(event.data, '*');
+            document.getElementById("test").innerHTML = `Получил от ${event.origin} пользователя ${event.data.name} ID: ${event.data.id}`;
         }
 
         console.log('Iframe начал слушать!');
@@ -36,7 +35,7 @@
             window.attachEvent("onmessage", listener);
         }
 
-        parent.postMessage({user: 'Iframe загружен!' }, '*');
+        parent.postMessage({ init: true }, '*');
     </script>
 </body>
 
