@@ -27,8 +27,6 @@
             //     window.removeEventListener("message", listener, false);
             // }
 
-            let test = document.getElementById("test");
-
             let text = `---\nOrigin: ${message.origin} \n`;
             
             if (message.err) {
@@ -43,7 +41,7 @@
                 }
             }
             
-            text += message.success ? 'Получил' : 'Не удалось получить';
+            document.getElementById("test").innerHTML += text;
         }
 
         console.log('Iframe начал слушать!');
