@@ -22,10 +22,10 @@
 
             console.log('Iframe получил: ', message);
 
-            if (window.removeEventListener) {
-                console.log('Iframe перестал слушать!');
-                window.removeEventListener("message", listener, false);
-            }
+            // if (window.removeEventListener) {
+            //     console.log('Iframe перестал слушать!');
+            //     window.removeEventListener("message", listener, false);
+            // }
 
             let test = document.getElementById("test");
 
@@ -36,10 +36,10 @@
             } else {
                 text += `Получил ${message.type} \n`;
                 
-                if (event.data.type === 'user') {
-                    text += `Имя: ${event.data.name} \nID: ${event.data.id}`;
-                } else if (event.data.type === 'payments') {
-                    text += `Сообщение: ${event.data.msg}`;
+                if (message.type === 'user') {
+                    text += `Имя: ${message.data.name} \nID: ${message.data.id}`;
+                } else if (message.type === 'payments') {
+                    text += `Сообщение: ${message.data.msg}`;
                 }
             }
             
