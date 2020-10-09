@@ -9,38 +9,47 @@
 
 <body>
     <div>IFRAME:</div>
-    <div style="white-space: pre-line" id="test"></div>
+    <div style="white-space: pre-line" id="test">Жду ysdk...</div>
     <script type="text/javascript">
         function listener(event) {
             let message = event.data;
 
-            if (!message.type) {
+            if (message.err) {
+                console.error(err);
+                return;
+            }
+
+            if (!message.ysdk) {
                 console.log('Неверное сообщение!');
                 return;
             }
 
-            console.log('Iframe получил: ', message);
+            console.log('Iframe получил ysdk: ', message);
 
-            // if (window.removeEventListener) {
-            //     console.log('Iframe перестал слушать!');
-            //     window.removeEventListener("message", listener, false);
-            // }
-
-            let text = `\n---\nСообщение от: ${event.origin} \n`;
-            
-            if (message.err) {
-                text += `Не удалось получить ${message.type} \nОшибка: ${message.err.message}`;
-            } else {
-                text += `Получил ${message.type} \n`;
-                
-                if (message.type === 'user') {
-                    text += `Имя: ${message.data.name} \nID: ${message.data.id} \n`;
-                } else if (message.type === 'payments') {
-                    text += `Сообщение: ${message.data.msg} \n`;
-                }
+            if (window.removeEventListener) {
+                console.log('Iframe перестал слушать!');
+                window.removeEventListener("message", listener, false);
             }
             
-            document.getElementById("test").innerHTML += text;
+            document.getElementById("test").innerHTML = 'Получил ysdk!';
+
+            useYSDK(message.ysdk);
+        }
+
+        function useYSDK(ysdk) {
+            ysdk.getPlayer().then(player => {
+                let user = {
+                    id: player.getUniqueID(),
+                    name: player.getName(),
+                    signature: player.signature
+                };
+
+                console.log('Получил пользователя: ', user);
+
+                return ysdk.getPayments();
+            }).then((payments) => {
+                console.log('Получил payments', payments);
+            }).catch(console.error);
         }
 
         console.log('Iframe начал слушать!');
