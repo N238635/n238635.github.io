@@ -27,7 +27,7 @@
             //     window.removeEventListener("message", listener, false);
             // }
 
-            let text = `---\nOrigin: ${message.origin} \n`;
+            let text = `\n---\nСообщение от: ${event.origin} \n`;
             
             if (message.err) {
                 text += `Не удалось получить ${message.type} \nОшибка: ${message.err.message}`;
@@ -35,9 +35,9 @@
                 text += `Получил ${message.type} \n`;
                 
                 if (message.type === 'user') {
-                    text += `Имя: ${message.data.name} \nID: ${message.data.id}\n`;
+                    text += `Имя: ${message.data.name} \nID: ${message.data.id} \n`;
                 } else if (message.type === 'payments') {
-                    text += `Сообщение: ${message.data.msg}\n`;
+                    text += `Сообщение: ${message.data.msg} \n`;
                 }
             }
             
