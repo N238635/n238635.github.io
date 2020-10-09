@@ -35,9 +35,9 @@
                 text += `Получил ${message.type} \n`;
                 
                 if (message.type === 'user') {
-                    text += `Имя: ${message.data.name} \nID: ${message.data.id}`;
+                    text += `Имя: ${message.data.name} \nID: ${message.data.id}\n`;
                 } else if (message.type === 'payments') {
-                    text += `Сообщение: ${message.data.msg}`;
+                    text += `Сообщение: ${message.data.msg}\n`;
                 }
             }
             
