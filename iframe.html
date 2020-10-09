@@ -26,7 +26,7 @@
 
             document.getElementById("test").innerHTML = event.origin + " прислал: " + event.data;
             console.log('Отправляем ответ из Iframe!');
-            parent.postMessage(event.data, '*');
+            // parent.postMessage(event.data, '*');
         }
 
         console.log('Iframe начал слушать!');
@@ -35,6 +35,8 @@
         } else { // ie 8
             window.attachEvent("onmessage", listener);
         }
+
+        parent.postMessage({user: 'Iframe загружен!' }, '*');
     </script>
 </body>
 
