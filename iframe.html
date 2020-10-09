@@ -13,19 +13,37 @@
     <div style="white-space: pre-line" id="test"></div>
     <script type="text/javascript">
         function listener(event) {
-            if (!event.data.id) {
+            let message = event.data;
+
+            if (!message.type) {
                 console.log('Неверное сообщение!');
                 return;
             }
 
-            console.log('Iframe получил: ', event.data);
+            console.log('Iframe получил: ', message);
 
             if (window.removeEventListener) {
                 console.log('Iframe перестал слушать!');
                 window.removeEventListener("message", listener, false);
             }
 
-            document.getElementById("test").innerHTML += `---\nПолучил пользователя от ${event.origin} \nИмя: ${event.data.name} \nID: ${event.data.id}`;
+            let test = document.getElementById("test");
+
+            let text = `---\nOrigin: ${message.origin} \n`;
+            
+            if (message.err) {
+                text += `Не удалось получить ${message.type} \nОшибка: ${message.err.message}`;
+            } else {
+                text += `Получил ${message.type} \n`;
+                
+                if (event.data.type === 'user') {
+                    text += `Имя: ${event.data.name} \nID: ${event.data.id}`;
+                } else if (event.data.type === 'payments') {
+                    text += `Сообщение: ${event.data.msg}`;
+                }
+            }
+            
+            text += message.success ? 'Получил' : 'Не удалось получить';
         }
 
         console.log('Iframe начал слушать!');
