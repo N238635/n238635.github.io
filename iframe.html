@@ -59,7 +59,10 @@
             window.attachEvent("onmessage", listener);
         }
 
-        parent.postMessage({ init: true }, 'https://app-104323.games.s3.yandex.net');
+        setTimeout(
+            () => parent.postMessage({ init: true }, 'https://app-104323.games.s3.yandex.net'), 
+            2000
+        );
     </script>
 </body>
 
