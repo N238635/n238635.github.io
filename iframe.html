@@ -10,47 +10,28 @@
 
 <body>
     <div>IFRAME:</div>
-    <div style="white-space: pre-line" id="test">Жду ysdk...</div>
+    <div style="white-space: pre-line" id="test">Жду данные от yandex...</div>
     <script type="text/javascript">
         function listener(event) {
             let message = event.data;
 
-            if (message.err) {
-                console.error(message.err);
+            if (message.err) console.error(message.err);
+
+            if (!message.user) {
+                console.log('Неверное сообщение!', message);
                 return;
             }
 
-            if (!message.ysdk) {
-                console.log('Неверное сообщение!');
-                return;
-            }
-
-            console.log('Iframe получил ysdk: ', message);
+            console.log('Iframe получил данные: ', message);
 
             if (window.removeEventListener) {
                 console.log('Iframe перестал слушать!');
                 window.removeEventListener("message", listener, false);
             }
             
-            document.getElementById("test").innerHTML = 'Получил ysdk!';
+            document.getElementById("test").innerHTML = 'Получил данные!';
 
             useYSDK(message.ysdk);
-        }
-
-        function useYSDK(ysdk) {
-            ysdk.getPlayer().then(player => {
-                let user = {
-                    id: player.getUniqueID(),
-                    name: player.getName(),
-                    signature: player.signature
-                };
-
-                console.log('Получил пользователя: ', user);
-
-                return ysdk.getPayments();
-            }).then((payments) => {
-                console.log('Получил payments', payments);
-            }).catch(console.error);
         }
 
         console.log('Iframe начал слушать!');
